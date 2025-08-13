@@ -21,3 +21,5 @@ service('auth')->routes($routes, ['except' => ['login', 'register','logout']]);
 $routes->get('login', 'Users::login');
 $routes->get('register', 'Users::register');
 $routes->get('logout', 'Users::logout');
+
+$routes->get("user_management","UserManagement::index");

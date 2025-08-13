@@ -21,22 +21,34 @@
 		/>
 		<!-- CSS -->
 		<link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>vendors/styles/core.css" />
-		<link
-			rel="stylesheet"
-			type="text/css"
-			href="<?php echo base_url(); ?>vendors/styles/icon-font.min.css"
-		/>
-		<link
-			rel="stylesheet"
-			type="text/css"
-			href="<?php echo base_url(); ?>plugins/datatables/css/dataTables.bootstrap4.min.css"
-		/>
-		<link
-			rel="stylesheet"
-			type="text/css"
-			href="<?php echo base_url(); ?>plugins/datatables/css/responsive.bootstrap4.min.css"
-		/>
+		<link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>vendors/styles/icon-font.min.css" />
+		<link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>plugins/datatables/css/dataTables.bootstrap4.min.css" />
+		<link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>plugins/datatables/css/responsive.bootstrap4.min.css" />
 		<link rel="stylesheet" type="text/css" href="vendors/styles/style.css" />
+
+		<style>
+			html, body {
+			height: 100%;
+			margin: 0;
+			display: flex;
+			flex-direction: column;
+		}
+
+		.main-container {
+			flex: 1; /* pushes footer to bottom */
+		}
+		</style>
+
+		<!-- js -->
+		<script src="<?php echo base_url(); ?>vendors/scripts/core.js"></script>
+		<script src="<?php echo base_url(); ?>vendors/scripts/script.min.js"></script>
+		<script src="<?php echo base_url(); ?>vendors/scripts/process.js"></script>
+		<script src="<?php echo base_url(); ?>vendors/scripts/layout-settings.js"></script>
+		<script src="<?php echo base_url(); ?>plugins/apexcharts/apexcharts.min.js"></script>
+		<script src="<?php echo base_url(); ?>plugins/datatables/js/jquery.dataTables.min.js"></script>
+		<script src="<?php echo base_url(); ?>plugins/datatables/js/dataTables.bootstrap4.min.js"></script>
+		<script src="<?php echo base_url(); ?>plugins/datatables/js/dataTables.responsive.min.js"></script>
+		<script src="<?php echo base_url(); ?>plugins/datatables/js/responsive.bootstrap4.min.js"></script>
 	</head>
 	<body>
 		<div class="pre-loader">
@@ -287,6 +299,12 @@
 								><span class="mtext">Dashboard</span>
 							</a>
 						</li>
+						<li class="dropdown">
+							<a href="<?php echo base_url("user_management")?>" class="dropdown-toggle no-arrow">
+								<span class="micon bi bi-person-plus-fill"></span>
+								<span class="mtext">User Management</span>
+							</a>
+						</li>
 						
 						<li>
 							<div class="dropdown-divider"></div>
@@ -302,33 +320,10 @@
             <?php echo $this->renderSection('content'); ?>
 		</div>
 
-		<div class="footer-wrap pd-20 mb-20 card-box mt-5">
-			LT TMS - Copyright FT Solutions Pvt. Ltd
-		</div>
-		<!-- js -->
-		<script src="<?php echo base_url(); ?>vendors/scripts/core.js"></script>
-		<script src="<?php echo base_url(); ?>vendors/scripts/script.min.js"></script>
-		<script src="<?php echo base_url(); ?>vendors/scripts/process.js"></script>
-		<script src="<?php echo base_url(); ?>vendors/scripts/layout-settings.js"></script>
-		<script src="<?php echo base_url(); ?>plugins/apexcharts/apexcharts.min.js"></script>
-		<script src="<?php echo base_url(); ?>plugins/datatables/js/jquery.dataTables.min.js"></script>
-		<script src="<?php echo base_url(); ?>plugins/datatables/js/dataTables.bootstrap4.min.js"></script>
-		<script src="<?php echo base_url(); ?>plugins/datatables/js/dataTables.responsive.min.js"></script>
-		<script src="<?php echo base_url(); ?>plugins/datatables/js/responsive.bootstrap4.min.js"></script>
-		<script src="<?php echo base_url(); ?>vendors/scripts/dashboard3.js"></script>
-		<script>
-			$(function() {
-				var speed = 800; // Adjust this value to change the speed
-				$(window).on("wheel", function(e) {
-					e.preventDefault();
-					var currentScrollTop = $(window).scrollTop();
-					var newScrollTop = currentScrollTop + (e.originalEvent.deltaY > 0 ? speed : -speed);
-
-					$("html, body").stop().animate({
-						scrollTop: newScrollTop
-					}, 600, "easeOutQuad"); // The 600 is the animation duration
-				});
-			});
-		</script>
+		<footer>
+			<div class="footer-wrap pd-20 mb-50 card-box mt-2">
+				LT TMS - Copyright FT Solutions Pvt. Ltd
+			</div>
+		</footer>
 	</body>
 </html>
