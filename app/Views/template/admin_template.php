@@ -300,7 +300,10 @@
 
 		<div class="main-container">
             <?php echo $this->renderSection('content'); ?>
-			
+		</div>
+
+		<div class="footer-wrap pd-20 mb-20 card-box mt-5">
+			LT TMS - Copyright FT Solutions Pvt. Ltd
 		</div>
 		<!-- js -->
 		<script src="<?php echo base_url(); ?>vendors/scripts/core.js"></script>
