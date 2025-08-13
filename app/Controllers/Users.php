@@ -27,7 +27,7 @@ class Users extends BaseController
                     $errors [] = $result->reason();
                 }
                 else {
-                    redirect()->to('dashboard');
+                    return redirect()->to('dashboard');
                 }
             }
             else {
@@ -97,5 +97,10 @@ class Users extends BaseController
             }
         }
         return view('users/register' , ['errrors' => $errors]);
+    }
+
+    public function logout() {
+        auth()->logout();
+        return redirect()->to("login")->with('message', lang('Auth.successLogout'));
     }
 }
