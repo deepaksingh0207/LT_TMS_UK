@@ -25,6 +25,7 @@
 		<link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>plugins/datatables/css/dataTables.bootstrap4.min.css" />
 		<link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>plugins/datatables/css/responsive.bootstrap4.min.css" />
 		<link rel="stylesheet" type="text/css" href="vendors/styles/style.css" />
+		<link href="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/css/bootstrap4-toggle.min.css" rel="stylesheet">
 
 		<style>
 			html, body {
@@ -49,6 +50,8 @@
 		<script src="<?php echo base_url(); ?>plugins/datatables/js/dataTables.bootstrap4.min.js"></script>
 		<script src="<?php echo base_url(); ?>plugins/datatables/js/dataTables.responsive.min.js"></script>
 		<script src="<?php echo base_url(); ?>plugins/datatables/js/responsive.bootstrap4.min.js"></script>
+		<script src="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/js/bootstrap4-toggle.min.js"></script>
+
 	</head>
 	<body>
 		<div class="pre-loader">

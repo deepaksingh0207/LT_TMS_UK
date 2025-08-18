@@ -14,6 +14,8 @@ $routes->get('/users/logout', 'Users::logout');
 $routes->post('/users/logout', 'Users::logout');
 $routes->get('/users/register', 'Users::register');
 $routes->post('/users/register', 'Users::register');
+$routes->post('/users/update', 'Users::update');
+
 $routes->get('/dashboard', 'Dashboard::index');
 
 service('auth')->routes($routes, ['except' => ['login', 'register','logout']]);

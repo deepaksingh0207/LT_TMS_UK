@@ -5,8 +5,22 @@ use CodeIgniter\Shield\Entities\User;
 use CodeIgniter\Shield\Exceptions\ValidationException;
 use CodeIgniter\Events\Events;
 
+use CodeIgniter\HTTP\RequestInterface;
+use CodeIgniter\HTTP\ResponseInterface;
+use Psr\Log\LoggerInterface;
+
+use App\Models\UserModel;
+
 class Users extends BaseController
 {
+    protected $userModel;
+
+    public function initController(RequestInterface $request, ResponseInterface $response, LoggerInterface $logger)
+    {
+        parent::initController($request, $response, $logger);
+        $this->userModel = new UserModel();
+    }
+
     public function index()
     {
         return view('users/index');
@@ -102,5 +116,37 @@ class Users extends BaseController
     public function logout() {
         auth()->logout();
         return redirect()->to("login")->with('message', lang('Auth.successLogout'));
+    }
+
+    public function update() {
+        if ($this->request->isAJAX()) {
+            $request_data = $this->request->getPost();
+            $update_data = [];
+
+            if(!empty($request_data['column_name'])) {
+                if($request_data['column_name'] == 'is_approved') {
+                    $update_data = [
+                        'is_approved' => $request_data['value']
+                    ];
+                }
+
+                if($request_data['column_name'] == 'active') {
+                    $update_data = [
+                        'active' => $request_data['value']
+                    ];
+                }
+            }
+            
+            if(!empty($update_data) && !empty($request_data['user_id'])) {
+                $updateResult = $this->userModel->update($request_data['user_id'] , $update_data);
+
+                if($updateResult) {
+                    return $this->response->setJSON(['status' => 1 , 'message' => 'Record Updated']);
+                }
+                else {
+                    return $this->response->setJSON(['status' => 0 , 'message' => 'Record Not Updated']);
+                }
+            } 
+        }
     }
 }
