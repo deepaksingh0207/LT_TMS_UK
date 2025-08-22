@@ -149,4 +149,53 @@ class Users extends BaseController
             } 
         }
     }
+
+    public function add() {
+        if($this->request->is('post')) {
+            
+            $response = [
+                'status' => 0,
+                'message' => 'User Not Created'
+            ];
+
+            $request_data = $this->request->getPost();
+            
+            // echo "<pre>";
+            // print_r($request_data);
+            // echo "</pre>";
+
+            $user_data = $this->userModel->orWhere('username' , $request_data['email'])->orWhere('sap_user_code' , $request_data['sap_user_code'])->first();
+
+            if(empty($user_data->id)) {
+
+                $request_data['username'] = $request_data['email'];
+                $password = '123456';
+
+                $users = auth()->getProvider();
+                
+                $user = $users->createUser([
+                    'username' => $request_data['email'],
+                    'email'    => $request_data['email'],
+                    'password' => $password,
+                ]);
+
+                $user->addGroup($request_data['group']);
+    
+                $response = [
+                    'status' => 1,
+                    'message' => 'User created successfully!',
+                ];
+            }
+            else {
+                $response = [
+                    'status' => 1,
+                    'message' => 'User Record exist already'
+                ];
+            }
+
+            return $this->response->setJSON($response);
+        }
+
+        exit;
+    }
 }

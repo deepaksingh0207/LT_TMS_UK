@@ -37,12 +37,12 @@
                         <td><?php echo ucwords($user->group) ?? ''; ?></td>
                         <td>
                             <div class="">
-                                <input type="checkbox" data-toggle="toggle" data-size="sm" data-on="yes" data-off="no" data-onstyle="success" data-offstyle="warning" id="yesNoSwitch" <?php echo $user->is_approved ? "checked" : ""; ?> value="<?php echo $user->is_approved; ?>" onchange="updateUser(<?php echo $user->id ?> , 'is_approved')">
+                                <input type="checkbox" data-toggle="toggle" data-size="sm" data-on="yes" data-off="no" data-onstyle="success" data-offstyle="warning" id="yesNoSwitch_<?php echo $user->id ?>" <?php echo $user->is_approved ? "checked" : ""; ?> value="<?php echo $user->is_approved; ?>" onchange="updateUser(<?php echo $user->id ?> , 'is_approved')">
                             </div>
                         </td>
                         <td>
                             <div class="">
-                                <input type="checkbox" data-toggle="toggle" data-size="sm" data-on="active" data-off="in-active" data-onstyle="success" data-offstyle="warning" id="statusSwitch" <?php echo $user->active ? 'checked' : ''; ?> value=<?php echo $user->active; ?> onchange="updateUser(<?php echo $user->id ?> , 'active')">
+                                <input type="checkbox" data-toggle="toggle" data-size="sm" data-on="active" data-off="in-active" data-onstyle="success" data-offstyle="warning" id="statusSwitch_<?php echo $user->id ?>" <?php echo $user->active ? 'checked' : ''; ?> value="<?php echo $user->active; ?>" onchange="updateUser(<?php echo $user->id ?> , 'active')">
                             </div>
                         </td>
                         <td>
@@ -74,12 +74,13 @@
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true"> × </button>
             </div>
             <div class="modal-body">
-                <form action="" method="post">
+                <form action="<?php echo base_url('users/add')?>" method="post" id="add_user_form">
                     <div class="row">
                         <div class="col-md-12">
                             <div class="form-group">
                                 <label for="">SAP User Code : </label>
                                 <input type="text" name="sap_user_code" id="sap_user_code" class="form-control" placeholder="Enter SAP User Code">
+                                <small class="form-text text-danger" id="sap_user_code_feedback"></small>
                             </div>
                         </div>
                     </div>
@@ -88,6 +89,7 @@
                             <div class="form-group">
                                 <label for="">First Name : </label>
                                 <input type="text" name="first_name" id="first_name" class="form-control" placeholder="Enter First Name">
+                                <small class="form-text text-danger" id="first_name_feedback"></small>
                             </div>
                         </div>
                     </div>
@@ -96,6 +98,7 @@
                             <div class="form-group">
                                 <label for="">Last Name : </label>
                                 <input type="text" name="last_name" id="last_name" class="form-control" placeholder="Enter Last Name">
+                                <small class="form-text text-danger" id="last_name_feedback"></small>
                             </div>
                         </div>
                     </div>
@@ -103,7 +106,8 @@
                         <div class="col-md-12">
                             <div class="form-group">
                                 <label for="">Email ID : </label>
-                                <input type="text" name="email_id" id="email_id" class="form-control" placeholder="Enter Email Id">
+                                <input type="text" name="email" id="email_id" class="form-control" placeholder="Enter Email Id">
+                                <small class="form-text text-danger" id="email_id_feedback"></small>
                             </div>
                         </div>
                     </div>
@@ -117,6 +121,7 @@
                                     <option value="employee">Employee</option>
                                     <option value="transporter">Transporter</option>
                                 </select>
+                                <small class="form-text text-danger" id="group_feedback"></small>
                             </div>
                         </div>
                     </div>
@@ -124,7 +129,7 @@
             </div>
             <div class="modal-footer">
                 <!-- <button type="button" class="btn btn-secondary" data-dismiss="modal"> Close </button> -->
-                <button type="button" class="btn btn-primary">Save changes</button>
+                <button type="button" class="btn btn-primary" id="add_user_submit_btn">Submit</button>
             </div>
         </div>
     </div>

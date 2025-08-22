@@ -9,6 +9,7 @@ class UserModel extends ShieldUserModel {
 
     protected $allowedFields  = [
         'username',
+        'sap_user_code',
         'first_name',
         'last_name',
         'status',
