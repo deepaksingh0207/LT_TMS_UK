@@ -47,7 +47,7 @@
                         </td>
                         <td>
                             <div class="table-actions">
-                                <a href="#" data-color="#265ed7"><i class="icon-copy dw dw-edit2"></i></a>
+                                <a data-color="#265ed7" onclick="editUser(<?php echo $user->id; ?>)"><i class="icon-copy dw dw-edit2"></i></a>
                                 <!-- <a href="#" data-color="#e95959"><i class="icon-copy dw dw-delete-3"></i></a> -->
                             </div>
                         </td>
@@ -55,7 +55,7 @@
                 <?php endforeach; ?>
             <?php else : ?>
                 <tr>
-                    <td colspan="3" class="py-3 px-6 text-center text-gray-500">No users found.</td>
+                    <td colspan="7" class="py-3 px-6 text-center text-gray-500">No users found.</td>
                 </tr>
             <?php endif; ?>
         </tbody>
@@ -66,7 +66,7 @@
     <?= $pager->links('default', 'bootstrap_full') ?>
 </div>
 
-<div class="modal fade bs-example-modal-md" id="bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true"> 
+<div class="modal fade bs-example-modal-md" id="bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-md modal-dialog-top">
         <div class="modal-content">
             <div class="modal-header">
@@ -74,7 +74,8 @@
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true"> × </button>
             </div>
             <div class="modal-body">
-                <form action="<?php echo base_url('users/add')?>" method="post" id="add_user_form">
+                <form action="<?php echo base_url('users/add') ?>" method="post" id="add_user_form">
+                    <input type="hidden" name="" id="user_id">
                     <div class="row">
                         <div class="col-md-12">
                             <div class="form-group">
@@ -130,6 +131,7 @@
             <div class="modal-footer">
                 <!-- <button type="button" class="btn btn-secondary" data-dismiss="modal"> Close </button> -->
                 <button type="button" class="btn btn-primary" id="add_user_submit_btn">Submit</button>
+                <button type="button" class="btn btn-primary d-none" id="edit_user_submit_btn">Submit</button>
             </div>
         </div>
     </div>

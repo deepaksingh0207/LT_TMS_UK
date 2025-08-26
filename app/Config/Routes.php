@@ -16,6 +16,9 @@ $routes->get('/users/register', 'Users::register');
 $routes->post('/users/register', 'Users::register');
 $routes->post('/users/update', 'Users::update');
 $routes->post('/users/add', 'Users::add');
+$routes->get('/users/edit/(:num)', 'Users::edit/$1');
+$routes->post('/users/edit/(:num)', 'Users::edit/$1');
+$routes->get('/users/profile', 'Users::profile');
 
 $routes->get('/dashboard', 'Dashboard::index');
 

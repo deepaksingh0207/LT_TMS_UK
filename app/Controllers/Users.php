@@ -1,6 +1,9 @@
 <?php
 
 namespace App\Controllers;
+
+use App\Models\HeadMasterModel;
+use App\Models\TrolleyMasterModel;
 use CodeIgniter\Shield\Entities\User;
 use CodeIgniter\Shield\Exceptions\ValidationException;
 use CodeIgniter\Events\Events;
@@ -10,15 +13,23 @@ use CodeIgniter\HTTP\ResponseInterface;
 use Psr\Log\LoggerInterface;
 
 use App\Models\UserModel;
+use CodeIgniter\Shield\Models\GroupModel;
+
 
 class Users extends BaseController
 {
     protected $userModel;
+    protected $groupModel;
+    protected $headMasterModel;
+    protected $trolleyMasterModel;
 
     public function initController(RequestInterface $request, ResponseInterface $response, LoggerInterface $logger)
     {
         parent::initController($request, $response, $logger);
         $this->userModel = new UserModel();
+        $this->groupModel = new GroupModel();
+        $this->headMasterModel = new HeadMasterModel();
+        $this->trolleyMasterModel = new TrolleyMasterModel();
     }
 
     public function index()
@@ -41,6 +52,19 @@ class Users extends BaseController
                     $errors [] = $result->reason();
                 }
                 else {
+                    $user = auth()->user();
+                    $user_group_data = $this->groupModel->where('user_id' , $user->id)->first();
+    
+                    session()->set([
+                        'user_id'   => $user->id,
+                        'sap_user_code' => $user->sap_user_code,
+                        'first_name' => $user->first_name,
+                        'last_name' => $user->last_name,
+                        'username'  => $user->username,
+                        'email'     => $user->email,
+                        'group'     => $user_group_data['group'],
+                    ]);
+                    
                     return redirect()->to('dashboard');
                 }
             }
@@ -150,52 +174,105 @@ class Users extends BaseController
         }
     }
 
-    public function add() {
-        if($this->request->is('post')) {
-            
-            $response = [
-                'status' => 0,
-                'message' => 'User Not Created'
-            ];
+    public function add()
+    {
+        if ($this->request->is('post')) {
 
             $request_data = $this->request->getPost();
-            
-            // echo "<pre>";
-            // print_r($request_data);
-            // echo "</pre>";
+            $users = auth()->getProvider(); // Shield's UserModel
+            $password = '123456';
 
-            $user_data = $this->userModel->orWhere('username' , $request_data['email'])->orWhere('sap_user_code' , $request_data['sap_user_code'])->first();
-
-            if(empty($user_data->id)) {
-
-                $request_data['username'] = $request_data['email'];
-                $password = '123456';
-
-                $users = auth()->getProvider();
-                
-                $user = $users->createUser([
-                    'username' => $request_data['email'],
-                    'email'    => $request_data['email'],
-                    'password' => $password,
+            // check if user already exists
+            $existing = $users->where('username', $request_data['email'])->first();
+            if ($existing) {
+                return $this->response->setJSON([
+                    'status'  => 0,
+                    'message' => 'User already exists!'
                 ]);
-
-                $user->addGroup($request_data['group']);
-    
-                $response = [
-                    'status' => 1,
-                    'message' => 'User created successfully!',
-                ];
-            }
-            else {
-                $response = [
-                    'status' => 1,
-                    'message' => 'User Record exist already'
-                ];
             }
 
-            return $this->response->setJSON($response);
+            // 1. Create User entity
+            $user = new User([
+                'username' => $request_data['email'],
+                'email'    => $request_data['email'],
+                'password' => $password, // Shield hashes automatically
+            ]);
+            $user->sap_user_code = $request_data['sap_user_code'];
+            $user->first_name = $request_data['first_name'];
+            $user->last_name = $request_data['last_name'];
+
+            // 2. Save to `users` table
+            $users->save($user);
+
+            // 3. Get ID of inserted user
+            $userId = $users->getInsertID();
+
+            // 4. Reload the saved user entity
+            $savedUser = $users->findById($userId);
+
+            // 6. Assign groups
+            if (!empty($request_data['group'])) {
+                $savedUser->addGroup($request_data['group']);
+            }
+
+            return $this->response->setJSON([
+                'status'  => 1,
+                'message' => 'User created with group(s) successfully!'
+            ]);
         }
 
         exit;
+    }
+
+    public function edit($user_id) {
+        if ($this->request->is('get')) {
+            $user_data = $this->userModel->where('id' , $user_id)->first();
+            $user_group_data = $this->groupModel->where('user_id' , $user_id)->first();
+
+            $data = [
+                'id' => $user_data->id,
+                'sap_user_code' => $user_data->sap_user_code,
+                'first_name' => $user_data->first_name,
+                'last_name' => $user_data->last_name,
+                'email' => $user_data->email,
+                'group' => $user_group_data['group'],
+            ];
+
+            return $this->response->setJSON(['status' => 1 , 'data' => $data]);
+        }
+        if ($this->request->is('post')) {
+            $request_data = $this->request->getPost();
+            $update_data = [
+                'sap_user_code' => $request_data['sap_user_code'],
+                'first_name' => $request_data['first_name'],
+                'last_name' => $request_data['last_name'],
+                'username' => $request_data['email'],
+            ];
+
+            $user_update = $this->userModel->update($user_id , $update_data);
+
+            $user_group_update = $this->groupModel->where('user_id' , $user_id)->set('group' , $request_data['group'])->update();
+
+            if($user_update && $user_group_update) {
+                return $this->response->setJSON(['status' => 1 , 'message' => "User Record Updated Successfully"]);
+            }
+        }
+    }
+
+    public function profile() {
+        $user_id = session()->get('user_id');
+        if(!empty($user_id)) {
+            $data = [
+                'head_masters' => $this->headMasterModel->where('user_id' , $user_id)->paginate(10),
+                'head_masters_pager' => $this->headMasterModel->pager,
+                'trolley_masters' => $this->trolleyMasterModel->where('user_id' , $user_id)->paginate(10),
+                'trolley_masters_pager' => $this->trolleyMasterModel->pager,
+            ];
+
+            if ($this->request->isAJAX()) {
+                
+            }
+        }
+        return view('users/profile');
     }
 }

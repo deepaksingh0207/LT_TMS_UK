@@ -24,8 +24,9 @@
 		<link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>vendors/styles/icon-font.min.css" />
 		<link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>plugins/datatables/css/dataTables.bootstrap4.min.css" />
 		<link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>plugins/datatables/css/responsive.bootstrap4.min.css" />
-		<link rel="stylesheet" type="text/css" href="vendors/styles/style.css" />
+		<link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>vendors/styles/style.css" />
 		<link href="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/css/bootstrap4-toggle.min.css" rel="stylesheet">
+		<link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>plugins/sweetalert2/sweetalert2.css" />
 
 		<style>
 			html, body {
@@ -51,6 +52,8 @@
 		<script src="<?php echo base_url(); ?>plugins/datatables/js/dataTables.responsive.min.js"></script>
 		<script src="<?php echo base_url(); ?>plugins/datatables/js/responsive.bootstrap4.min.js"></script>
 		<script src="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/js/bootstrap4-toggle.min.js"></script>
+		<script src="<?php echo base_url(); ?>plugins/sweetalert2/sweetalert2.all.js"></script>
+		<script src="<?php echo base_url(); ?>plugins/sweetalert2/sweet-alert.init.js"></script>
 
 	</head>
 	<body>
@@ -89,12 +92,12 @@
 					<div class="dropdown">
 						<a class="dropdown-toggle" href="#" role="button" data-toggle="dropdown">
 							<span class="user-icon">
-								<img src="vendors/images/user.png" alt="" />
+								<img src="<?php echo base_url(); ?>vendors/images/user.png" alt="" />
 							</span>
-							<span class="user-name">User</span>
+							<span class="user-name"><?php echo session()->get('first_name')." ".session()->get('last_name') ?></span>
 						</a>
 						<div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list" >
-							<a class="dropdown-item" href="profile.html">
+							<a class="dropdown-item" href="<?php echo base_url('users/profile') ?>">
 								<i class="dw dw-user1"></i> Profile
 							</a>
 							

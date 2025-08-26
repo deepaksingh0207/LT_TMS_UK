@@ -12,6 +12,7 @@
 <script>
     let update_user_url = "<?php echo base_url('users/update') ?>";
     let add_user_url = "<?php echo base_url('users/add')?>";
+    let edit_user_url = "<?php echo base_url('users/edit'); ?>";
 </script>
 <script src="<?php echo base_url(); ?>portal/user_management/index.js"></script>
 <?php $this->endSection() ?>
