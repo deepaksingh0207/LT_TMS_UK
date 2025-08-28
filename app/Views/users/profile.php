@@ -52,15 +52,15 @@
                             <div class="tab-content">
                                 <!-- head_masters Tab start -->
                                 <div class="tab-pane fade height-100-p active show" id="head_masters" role="tabpanel">
-                                    <div class="profile-setting">
-                                        <?php echo view('users/head_masters_table_partial', []); ?>
+                                    <div class="profile-setting" id="head_master_table">
+                                        
                                     </div>
                                 </div>
                                 <!-- head_masters Tab End -->
                                 <!-- trolley_masters Tab start -->
                                 <div class="tab-pane fade height-100-p" id="trolley_masters" role="tabpanel">
-                                    <div class="profile-setting">
-                                        <?php echo view('users/trolley_masters_table_partial', []); ?>
+                                    <div class="profile-setting" id="trolley_master_table">
+                                        
                                     </div>
                                 </div>
                                 <!-- trolley_masters Tab End -->
@@ -73,5 +73,14 @@
         </div>
     </div>
 </div>
+
+<script>
+    let get_head_master_data_url = "<?php echo base_url('users/get-head-master-data') ?>";
+    let get_trolley_master_data_url = "<?php echo base_url('users/get-trolley-master-data') ?>";
+
+    let add_head_master_url = "<?php echo base_url('users/add-head-master-data') ?>";
+    let add_trolley_master_url = "<?php echo base_url("users/add-trolley-master-data");?>";
+</script>
+<script src="<?php echo base_url(); ?>portal/users/profile.js"></script>
 
 <?php $this->endSection() ?>

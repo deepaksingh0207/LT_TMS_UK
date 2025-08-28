@@ -1,18 +1,9 @@
-<?php
-/**
- * Bootstrap 4 Full Pager Template
- *
- * Renders Previous/Next + numbered links
- *
- * @var CodeIgniter\Pager\PagerRenderer $pager
- */
-?>
-<?php if ($pager->hasPrevious() || $pager->hasNext()) : ?>
+<?php if ($pager->hasPreviousPage() || $pager->hasNextPage()) : ?>
     <nav aria-label="<?= lang('Pager.pageNavigation') ?>">
         <ul class="pagination justify-content-center">
 
             <!-- Previous Page -->
-            <?php if ($pager->hasPrevious()) : ?>
+            <?php if ($pager->hasPreviousPage()) : ?>
                 <li class="page-item">
                     <a class="page-link" href="<?= $pager->getPreviousPage() ?>" aria-label="<?= lang('Pager.previous') ?>">
                         <span aria-hidden="true">&laquo;</span>
@@ -38,7 +29,7 @@
             <?php endforeach; ?>
 
             <!-- Next Page -->
-            <?php if ($pager->hasNext()) : ?>
+            <?php if ($pager->hasNextPage()) : ?>
                 <li class="page-item">
                     <a class="page-link" href="<?= $pager->getNextPage() ?>" aria-label="<?= lang('Pager.next') ?>">
                         <span aria-hidden="true">&raquo;</span>

@@ -260,19 +260,96 @@ class Users extends BaseController
     }
 
     public function profile() {
+        return view('users/profile');
+    }
+
+    public function getHeadMasterData() {
         $user_id = session()->get('user_id');
         if(!empty($user_id)) {
             $data = [
-                'head_masters' => $this->headMasterModel->where('user_id' , $user_id)->paginate(10),
-                'head_masters_pager' => $this->headMasterModel->pager,
-                'trolley_masters' => $this->trolleyMasterModel->where('user_id' , $user_id)->paginate(10),
-                'trolley_masters_pager' => $this->trolleyMasterModel->pager,
+                'head_masters' => $this->headMasterModel->where('user_id' , $user_id)->paginate(5),
+                'pager' => $this->headMasterModel->pager,
             ];
 
             if ($this->request->isAJAX()) {
-                
+                // If AJAX, only return the partial view containing the table rows and pagination links
+                return view('users/head_masters_table_partial', $data);
             }
         }
-        return view('users/profile');
+    }
+
+    public function getTrolleyMasterData() {
+        $user_id = session()->get('user_id');
+        if(!empty($user_id)) {
+            $data = [
+                'trolley_masters' => $this->trolleyMasterModel->where('user_id' , $user_id)->paginate(5),
+                'pager' => $this->trolleyMasterModel->pager,
+            ];
+
+            if ($this->request->isAJAX()) {
+                // If AJAX, only return the partial view containing the table rows and pagination links
+                return view('users/trolley_masters_table_partial', $data);
+            }
+        }
+    }
+
+    public function addHeadMasterData() {
+        $user_id = session()->get('user_id');
+        if($this->request->is('post')) {
+            $req_data = $this->request->getPost();
+
+            if(!empty($req_data['vehicle_no']) && !empty($req_data['weight'])) {
+                $head_master_record = $this->headMasterModel->where(['vehicle_no' => $req_data['vehicle_no'] , 'user_id' => $user_id ])->first();
+                
+                if(!empty($head_master_record['id'])) {
+                    return $this->response->setJSON(['status' => 0 , 'message' => 'This Vehicle No is already added']);
+                }
+                else {
+                    $insert_data = [
+                        'user_id' => $user_id,
+                        'vehicle_no' => $req_data['vehicle_no'],
+                        'weight' => $req_data['weight'], 
+                    ];
+                    $this->headMasterModel->insert($insert_data);
+
+                    if($this->headMasterModel->getInsertID()) {
+                        return $this->response->setJSON(['status' => 1 , 'message' => 'Record created successfully']);
+                    }
+                }
+            }
+            else {
+                return $this->response->setJSON(['status' => 0 , 'message' => 'Empty Vehicle No or Weight found']);
+            }
+        }
+    }
+
+    public function addTrolleyMasterData() {
+        $user_id = session()->get('user_id');
+        if($this->request->is('post')) {
+            $req_data = $this->request->getPost();
+            if( !empty($req_data['trolley_no']) && !empty($req_data['trolley_weight']) && !empty($req_data['capacity']) ) {
+                $trolley_master_record = $this->trolleyMasterModel->where(['trolley_no' => $req_data['trolley_no'] , 'user_id' => $user_id ])->first();
+
+                if(!empty($trolley_master_record['id'])) {
+                    return $this->response->setJSON(['status' => 0 , 'message' => 'This Trolley No is already added']);
+                }
+                else {
+                    $insert_data = [
+                        'user_id' => $user_id,
+                        'trolley_no' => $req_data['trolley_no'],
+                        'weight' => $req_data['trolley_weight'], 
+                        'capacity' => $req_data['capacity']
+                    ];
+                    $this->trolleyMasterModel->insert($insert_data);
+
+                    if($this->trolleyMasterModel->getInsertID()) {
+                        return $this->response->setJSON(['status' => 1 , 'message' => 'Record created successfully']);
+                    }
+                }
+            }
+            else {
+                return $this->response->setJSON(['status' => 0 , 'message' => 'Empty Trolley No or Weight found']);
+            }
+        }
     }
 }

@@ -7,6 +7,7 @@ $(document).ready(function () {
       dataType: "html",
       success: function (response) {
         $("#data-container").html(response);
+        $('#data-container input[data-toggle="toggle"]').bootstrapToggle();
         $("#loading-overlay").addClass("hidden");
       },
       error: function (xhr, status, error) {

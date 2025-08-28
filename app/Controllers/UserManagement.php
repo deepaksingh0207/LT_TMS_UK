@@ -20,7 +20,7 @@ class UserManagement extends BaseController
     }
 
     public function index() {
-        $data['users'] = $this->userModel->paginate(10);
+        $data['users'] = $this->userModel->paginate(5);
         $data['pager'] = $this->userModel->pager;
 
         foreach($data['users'] as $key => $user) {
