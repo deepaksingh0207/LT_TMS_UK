@@ -33,3 +33,6 @@ $routes->get('register', 'Users::register');
 $routes->get('logout', 'Users::logout');
 
 $routes->get("user_management","UserManagement::index");
+$routes->get("delivery_orders","DeliveryOrders::index");
+$routes->get("head_master","HeadMaster::index");
+$routes->get("trolley_master","TrolleyMaster::index");

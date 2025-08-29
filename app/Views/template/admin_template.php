@@ -311,6 +311,27 @@
 								<span class="mtext">User Management</span>
 							</a>
 						</li>
+
+						<li class="dropdown">
+							<a href="<?php echo base_url("delivery_orders")?>" class="dropdown-toggle no-arrow">
+								<span class="micon bi bi-cart-plus-fill"></span>
+								<span class="mtext">Delivery Orders</span>
+							</a>
+						</li>
+
+						<li class="dropdown">
+							<a href="<?php echo base_url("head_master")?>" class="dropdown-toggle no-arrow">
+								<span class="micon bi bi-truck"></span>
+								<span class="mtext">Head Master</span>
+							</a>
+						</li>
+
+						<li class="dropdown">
+							<a href="<?php echo base_url("trolley_master")?>" class="dropdown-toggle no-arrow">
+								<span class="micon bi bi-truck-flatbed"></span>
+								<span class="mtext">Trolley Master</span>
+							</a>
+						</li>
 						
 						<li>
 							<div class="dropdown-divider"></div>
