@@ -18,7 +18,7 @@
                             </div>
                         </div>
                         <div class="widget-icon">
-                            <div class="icon" data-color="#00eccf">
+                            <div class="icon">
                                 <i class="icon-copy dw dw-calendar1"></i>
                             </div>
                         </div>
@@ -35,7 +35,7 @@
                             </div>
                         </div>
                         <div class="widget-icon">
-                            <div class="icon" data-color="#ff5b5b">
+                            <div class="icon">
                                 <span class="icon-copy ti-heart"></span>
                             </div>
                         </div>
@@ -69,7 +69,7 @@
                             <div class="font-14 text-secondary weight-500">Earning</div>
                         </div>
                         <div class="widget-icon">
-                            <div class="icon" data-color="#09cc06">
+                            <div class="icon">
                                 <i class="icon-copy fa fa-money" aria-hidden="true"></i>
                             </div>
                         </div>
