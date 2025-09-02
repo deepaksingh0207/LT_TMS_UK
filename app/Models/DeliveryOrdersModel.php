@@ -15,6 +15,7 @@ class DeliveryOrdersModel extends Model {
         'ship_to_party_name',
         'sold_to_party_code',
         'sold_to_party_name',
+        'transporter_id',
     ];
 
 }

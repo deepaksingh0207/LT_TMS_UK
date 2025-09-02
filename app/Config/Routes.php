@@ -36,3 +36,8 @@ $routes->get("user_management","UserManagement::index");
 $routes->get("delivery_orders","DeliveryOrders::index");
 $routes->get("head_master","HeadMaster::index");
 $routes->get("trolley_master","TrolleyMaster::index");
+
+$routes->post('/api/push-order', 'Api::pushOrder');
+$routes->get('/api/push-order', 'Api::pushOrder');
+
+$routes->post("/delivery_orders/assign-transporter" , "DeliveryOrders::assignTransporter");
