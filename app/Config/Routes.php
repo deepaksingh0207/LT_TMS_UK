@@ -39,3 +39,5 @@ $routes->get("trolley_master","TrolleyMaster::index");
 
 $routes->post('/api/push-order', 'Api::pushOrder');
 $routes->get('/api/push-order', 'Api::pushOrder');
+
+$routes->post("/delivery_orders/assign-transporter" , "DeliveryOrders::assignTransporter");
