@@ -1,23 +1,36 @@
 <div class="col-xl-12 col-lg-12 col-md-12 card-box pb-10">
     <div class="row h5 pd-20 mb-0">
-        <div class="col-md-8">Delivery Orders</div>
-        <div class="col-md-3">
-            <div class="from-group">
-                <div class="dropdown bootstrap-select form-control">
-                    <select name="transporter_id" id="transporter_id" class="selectpicker form-control" data-style=btn-outline-primary>
-                        <option value="">---Select Transporter---</option>
-                        <?php foreach ($transporter_data as $transporter) : ?>
-                            <option value="<?php echo $transporter->id; ?>"><?php echo $transporter->first_name . " " . $transporter->last_name; ?></option>
-                        <?php endforeach; ?>
-                    </select>
+        <?php if(session()->get('group') == 'admin' || session()->get('group') == 'superadmin') {
+            $delivery_order_div_class = "col-md-8";
+        }
+        else {
+            $delivery_order_div_class = "col-md-10";
+        } 
+        ?>
+        <div class="<?php echo $delivery_order_div_class; ?>">Delivery Orders</div>
+        <?php if(session()->get('group') == 'admin' || session()->get('group') == 'superadmin') : ?>
+            <div class="col-md-3">
+                <div class="from-group">
+                    <div class="dropdown bootstrap-select form-control">
+                        <select name="transporter_id" id="transporter_id" class="selectpicker form-control" data-style=btn-outline-primary>
+                            <option value="">---Select Transporter---</option>
+                            <?php foreach ($transporter_data as $transporter) : ?>
+                                <option value="<?php echo $transporter->id; ?>"><?php echo $transporter->first_name . " " . $transporter->last_name; ?></option>
+                            <?php endforeach; ?>
+                        </select>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="col-md-1 text-right">
-            <a href="#" class="btn btn-info" data-toggle="modal" data-target="#confirmation-modal" type="button">
-                Assign
-            </a>
-        </div>
+            <div class="col-md-1 text-right">
+                <a href="#" class="btn btn-info" data-toggle="modal" data-target="#confirmation-modal" type="button">
+                    Assign
+                </a>
+            </div>
+        <?php elseif(session()->get('group') == 'transporter') : ?>
+            <div class="col-md-2 text-right">
+                <button type="button" class="btn btn-primary">Create ASN</button>
+            </div>
+        <?php endif; ?>
     </div>
     <table class="data-table table nowrap">
         <thead>

@@ -25,7 +25,13 @@ class DeliveryOrders extends BaseController {
     }
 
     public function index() {
-        $data['orders'] = $this->deliveryOrdersModel->paginate(5);
+        if(session()->get('group') == 'transporter') {
+            $data['orders'] = $this->deliveryOrdersModel->where('transporter_id' , session()->get('user_id'))->paginate(5);
+        }
+        else {
+            $data['orders'] = $this->deliveryOrdersModel->paginate(5);
+        }
+        
         $data['pager'] = $this->deliveryOrdersModel->pager;
         $transporter_user_ids = $this->groupModel->where('group' , 'transporter')->findColumn("user_id");
         $data['transporter_data'] = $this->userModel->whereIn('id',$transporter_user_ids)->findAll();

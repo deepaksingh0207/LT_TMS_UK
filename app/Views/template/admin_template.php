@@ -299,39 +299,42 @@
 			<div class="menu-block customscroll">
 				<div class="sidebar-menu">
 					<ul id="accordion-menu">
-						<li class="dropdown">
-							<a href="<?php echo base_url('dashboard'); ?>" class="dropdown-toggle no-arrow">
-								<span class="micon bi bi-house"></span
-								><span class="mtext">Dashboard</span>
-							</a>
-						</li>
-						<li class="dropdown">
-							<a href="<?php echo base_url("user_management")?>" class="dropdown-toggle no-arrow">
-								<span class="micon bi bi-person-plus-fill"></span>
-								<span class="mtext">User Management</span>
-							</a>
-						</li>
+						<?php if(session()->get('group') == 'superadmin' || session()->get('group') == 'admin' || session()->get('group') == 'transporter') : ?>
+							<li class="dropdown">
+								<a href="<?php echo base_url('dashboard'); ?>" class="dropdown-toggle no-arrow">
+									<span class="micon bi bi-house"></span
+									><span class="mtext">Dashboard</span>
+								</a>
+							</li>
+							<li class="dropdown">
+								<a href="<?php echo base_url("delivery_orders")?>" class="dropdown-toggle no-arrow">
+									<span class="micon bi bi-cart-plus-fill"></span>
+									<span class="mtext">Delivery Orders</span>
+								</a>
+							</li>
+						<?php endif; ?>
+						<?php if(session()->get('group') == 'superadmin' || session()->get('group') == 'admin') : ?>
+							<li class="dropdown">
+								<a href="<?php echo base_url("user_management")?>" class="dropdown-toggle no-arrow">
+									<span class="micon bi bi-person-plus-fill"></span>
+									<span class="mtext">User Management</span>
+								</a>
+							</li>
 
-						<li class="dropdown">
-							<a href="<?php echo base_url("delivery_orders")?>" class="dropdown-toggle no-arrow">
-								<span class="micon bi bi-cart-plus-fill"></span>
-								<span class="mtext">Delivery Orders</span>
-							</a>
-						</li>
+							<li class="dropdown">
+								<a href="<?php echo base_url("head_master")?>" class="dropdown-toggle no-arrow">
+									<span class="micon bi bi-truck"></span>
+									<span class="mtext">Head Master</span>
+								</a>
+							</li>
 
-						<li class="dropdown">
-							<a href="<?php echo base_url("head_master")?>" class="dropdown-toggle no-arrow">
-								<span class="micon bi bi-truck"></span>
-								<span class="mtext">Head Master</span>
-							</a>
-						</li>
-
-						<li class="dropdown">
-							<a href="<?php echo base_url("trolley_master")?>" class="dropdown-toggle no-arrow">
-								<span class="micon bi bi-truck-flatbed"></span>
-								<span class="mtext">Trolley Master</span>
-							</a>
-						</li>
+							<li class="dropdown">
+								<a href="<?php echo base_url("trolley_master")?>" class="dropdown-toggle no-arrow">
+									<span class="micon bi bi-truck-flatbed"></span>
+									<span class="mtext">Trolley Master</span>
+								</a>
+							</li>
+						<?php endif; ?>
 						
 						<li>
 							<div class="dropdown-divider"></div>
