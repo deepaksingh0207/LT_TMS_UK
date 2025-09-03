@@ -40,6 +40,7 @@ class DeliveryOrders extends BaseController {
             if(!empty($v['transporter_id'])) {
                 $transporter_data = $this->userModel->where('id',$v['transporter_id'])->first();
                 if(!empty($transporter_data->first_name) && !empty($transporter_data->last_name)) {
+                    $data['orders'][$k]['sap_user_code'] = $transporter_data->sap_user_code;
                     $data['orders'][$k]['transporter_name'] = $transporter_data->first_name." ".$transporter_data->last_name;
                 }
             }

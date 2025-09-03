@@ -271,6 +271,9 @@ class Users extends BaseController
                 'pager' => $this->headMasterModel->pager,
             ];
 
+            $transporter_user_ids = $this->groupModel->where('group' , 'transporter')->findColumn("user_id");
+            $data['transporter_data'] = $this->userModel->whereIn('id',$transporter_user_ids)->findAll();
+
             if ($this->request->isAJAX()) {
                 // If AJAX, only return the partial view containing the table rows and pagination links
                 return view('users/head_masters_table_partial', $data);
@@ -286,6 +289,9 @@ class Users extends BaseController
                 'pager' => $this->trolleyMasterModel->pager,
             ];
 
+            $transporter_user_ids = $this->groupModel->where('group' , 'transporter')->findColumn("user_id");
+            $data['transporter_data'] = $this->userModel->whereIn('id',$transporter_user_ids)->findAll();
+
             if ($this->request->isAJAX()) {
                 // If AJAX, only return the partial view containing the table rows and pagination links
                 return view('users/trolley_masters_table_partial', $data);
@@ -294,11 +300,20 @@ class Users extends BaseController
     }
 
     public function addHeadMasterData() {
-        $user_id = session()->get('user_id');
+        if(session()->get('group') == 'transporter') {
+            $user_id = session()->get('user_id');
+        }
+
         if($this->request->is('post')) {
             $req_data = $this->request->getPost();
 
-            if(!empty($req_data['vehicle_no']) && !empty($req_data['weight'])) {
+            if(session()->get('group') == 'admin' || session()->get('group') == 'superadmin') {
+                if(!empty($req_data['transporter_id'])) {
+                    $user_id = $req_data['transporter_id'];
+                }
+            }
+
+            if(!empty($req_data['vehicle_no']) && !empty($req_data['weight']) && !empty($user_id)) {
                 $head_master_record = $this->headMasterModel->where(['vehicle_no' => $req_data['vehicle_no'] , 'user_id' => $user_id ])->first();
                 
                 if(!empty($head_master_record['id'])) {
@@ -318,15 +333,36 @@ class Users extends BaseController
                 }
             }
             else {
-                return $this->response->setJSON(['status' => 0 , 'message' => 'Empty Vehicle No or Weight found']);
+
+                if(empty($req_data['vehicle_no'])) {
+                    $message = "Empty Vehicle No Found";
+                }
+
+                if(empty($req_data['weight'])) {
+                    $message = "Empty Weight Found";
+                }
+
+                if(empty($user_id)) {
+                    $message = "No Transporter Found";
+                }
+                return $this->response->setJSON(['status' => 0 , 'message' => $message]);
             }
         }
     }
 
     public function addTrolleyMasterData() {
-        $user_id = session()->get('user_id');
+        if(session()->get('group') == 'transporter') {
+            $user_id = session()->get('user_id');
+        }
+
         if($this->request->is('post')) {
             $req_data = $this->request->getPost();
+            if(session()->get('group') == 'admin' || session()->get('group') == 'superadmin') {
+                if(!empty($req_data['transporter_id'])) {
+                    $user_id = $req_data['transporter_id'];
+                }
+            }
+
             if( !empty($req_data['trolley_no']) && !empty($req_data['trolley_weight']) && !empty($req_data['capacity']) ) {
                 $trolley_master_record = $this->trolleyMasterModel->where(['trolley_no' => $req_data['trolley_no'] , 'user_id' => $user_id ])->first();
 
@@ -348,7 +384,24 @@ class Users extends BaseController
                 }
             }
             else {
-                return $this->response->setJSON(['status' => 0 , 'message' => 'Empty Trolley No or Weight found']);
+
+                if(empty($req_data['vehicle_no'])) {
+                    $message = "Empty Vehicle No Found";
+                }
+
+                if(empty($req_data['weight'])) {
+                    $message = "Empty Weight Found";
+                }
+
+                if(empty($req_data['capacity'])) {
+                    $message = "Empty Capacity Found";
+                }
+
+                if(empty($user_id)) {
+                    $message = "No Transporter Found";
+                }
+
+                return $this->response->setJSON(['status' => 0 , 'message' => $message]);
             }
         }
     }

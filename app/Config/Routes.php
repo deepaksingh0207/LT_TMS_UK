@@ -41,3 +41,6 @@ $routes->post('/api/push-order', 'Api::pushOrder');
 $routes->get('/api/push-order', 'Api::pushOrder');
 
 $routes->post("/delivery_orders/assign-transporter" , "DeliveryOrders::assignTransporter");
+
+$routes->get("/asn/create" , "Asn::create");
+$routes->post("/asn/create" , "Asn::create");

@@ -1,6 +1,6 @@
 <div class="row" style="display: flex; justify-content: flex-end;">
     <div class="col-md-2">
-        <button type="button" class="btn btn-info" data-toggle="modal" data-target="#bd-example-modal-lg" >+ Add</button>
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#bd-example-modal-lg" >+ Add</button>
     </div>
 </div>
 <div class="row pt-2">
@@ -8,6 +8,7 @@
         <thead>
             <tr>
                 <th scope="col">#</th>
+                <th>Transporter</th>
                 <th scope="col">Vehicle No</th>
                 <th scope="col">Weight</th>
             </tr>
@@ -17,6 +18,7 @@
                 <?php foreach ($head_masters as $row): ?>
                     <tr>
                         <th scope="row"><?php echo $row['id'] ?></th>
+                        <td><?php echo $row['user_name']." (".$row['sap_user_code'].")"; ?></td>
                         <td><?php echo $row['vehicle_no'] ?></td>
                         <td><?php echo $row['weight'] ?></td>
                     </tr>
@@ -43,6 +45,21 @@
             </div>
             <div class="modal-body">
                 <form id="head_master_form" method="post">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <div class="dropdown bootstrap-select form-control">
+                                    <label for="transporter_id">Select Transporter : </label>
+                                    <select name="transporter_id" id="transporter_id" class="selectpicker form-control">
+                                        <option value="">---Select Transporter---</option>
+                                        <?php foreach ($transporter_data as $transporter) : ?>
+                                            <option value="<?php echo $transporter->id; ?>"><?php echo $transporter->first_name . " " . $transporter->last_name; ?></option>
+                                        <?php endforeach; ?>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     <div class="row">
                         <div class="col-md-12">
                             <div class="form-group">

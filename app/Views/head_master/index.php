@@ -13,4 +13,10 @@
     </div>
 </div>
 
+<script>
+    let get_head_master_data_url = "<?php echo base_url('users/get-head-master-data') ?>";
+    let add_head_master_url = "<?php echo base_url('users/add-head-master-data') ?>";
+</script>
+<script src="<?php echo base_url(); ?>portal/head_master/index.js"></script>
+
 <?php $this->endSection() ?>

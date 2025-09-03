@@ -28,7 +28,7 @@
             </div>
         <?php elseif(session()->get('group') == 'transporter') : ?>
             <div class="col-md-2 text-right">
-                <button type="button" class="btn btn-primary">Create ASN</button>
+                <a type="button" href="<?php echo base_url("asn/create")?>" class="btn btn-primary">Create ASN</a>
             </div>
         <?php endif; ?>
     </div>
@@ -59,7 +59,7 @@
                         <td><?php echo $order['delivery_date']; ?></td>
                         <td><?php echo "Code - " . $order['ship_to_party_code'] . "<br> Name - " . $order['ship_to_party_name']; ?></td>
                         <td><?php echo "Code - " . $order['sold_to_party_code'] . "<br> Name - " . $order['sold_to_party_name']; ?></td>
-                        <td><?php echo (!empty($order['transporter_name']) ? $order['transporter_name'] : "-")?></td>
+                        <td><?php echo (!empty($order['transporter_name']) ? $order['transporter_name']."(".$order['sap_user_code'].")" : "-")?></td>
                     </tr>
                 <?php endforeach; ?>
             <?php else : ?>

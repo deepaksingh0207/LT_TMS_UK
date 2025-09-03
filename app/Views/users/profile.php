@@ -82,5 +82,7 @@
     let add_trolley_master_url = "<?php echo base_url("users/add-trolley-master-data");?>";
 </script>
 <script src="<?php echo base_url(); ?>portal/users/profile.js"></script>
+<script src="<?php echo base_url(); ?>portal/head_master/index.js"></script>
+<script src="<?php echo base_url(); ?>portal/trolley_master/index.js"></script>
 
 <?php $this->endSection() ?>
