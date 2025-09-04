@@ -82,4 +82,18 @@ $(document).ready(function () {
             return;
         }
     });
+
+    $("#create_asn_btn").click(function (e) { 
+        e.preventDefault();
+        let order_ids = [];
+        $(".order-checkbox").each(function (index, element) {
+            // element == this
+            if($(element).prop('checked')) {
+                order_ids.push($(element).val());
+            }
+        });
+
+        $("#hidden_order_ids").val(order_ids);
+        $("#create_asn_form").submit();
+    });
 });

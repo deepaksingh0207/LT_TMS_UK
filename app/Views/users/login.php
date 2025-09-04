@@ -28,9 +28,9 @@
     <div class="login-header box-shadow">
         <div class="container-fluid d-flex justify-content-between align-items-center">
             <div class="brand-logo">
-                <a href="login.html">
-                    <!-- <img src="<?php echo base_url(); ?>vendors/images/deskapp-logo.svg" alt="" /> -->
-                    <h4>LT TMS</h4>
+                <a href="<?php echo base_url(); ?>">
+                    <img src="<?php echo base_url(); ?>/images/lt-foods-uk-logo.jpg" alt="" style="height:66px" />
+                    <!-- <h4>LT TMS</h4> -->
                 </a>
             </div>
         </div>
@@ -45,7 +45,7 @@
                 <div class="col-md-6 col-lg-5">
                     <div class="login-box bg-white box-shadow border-radius-10">
                         <div class="login-title">
-                            <h2 class="text-center text-primary">Login To LT TMS</h2>
+                            <h2 class="text-center text-primary">Login To TMS</h2>
                         </div>
                         <?php if (! empty($message)): ?>
                             <div class="alert alert-success" role="alert">

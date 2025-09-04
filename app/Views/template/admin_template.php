@@ -60,8 +60,8 @@
 		<div class="pre-loader">
 			<div class="pre-loader-box">
 				<div class="loader-logo">
-                    <h4>LT TMS</h4>
-					<!-- <img src="vendors/images/deskapp-logo.svg" alt="" /> -->
+                    <!-- <h4>LT TMS</h4> -->
+					<img src="<?php echo base_url(); ?>/images/lt-foods-uk-logo.jpg" alt="" />
 				</div>
 				<div class="loader-progress" id="progress_div">
 					<div class="bar" id="bar1"></div>
@@ -284,13 +284,8 @@
 		<div class="left-side-bar">
 			<div class="brand-logo">
 				<a href="<?php base_url('dashboard');?>">
-					<!-- <img src="vendors/images/deskapp-logo.svg" alt="" class="dark-logo" />
-					<img
-						src="vendors/images/deskapp-logo-white.svg"
-						alt=""
-						class="light-logo"
-					/> -->
-                    <h4>LT TMS</h4>
+					<img src="<?php echo base_url(); ?>/images/lt-foods-uk-logo.jpg" alt="" style="height:69px" />
+                    <!-- <h4>LT TMS</h4> -->
 				</a>
 				<div class="close-sidebar" data-toggle="left-sidebar-close">
 					<i class="ion-close-round"></i>

@@ -28,7 +28,10 @@
             </div>
         <?php elseif(session()->get('group') == 'transporter') : ?>
             <div class="col-md-2 text-right">
-                <a type="button" href="<?php echo base_url("asn/create")?>" class="btn btn-primary">Create ASN</a>
+                <form action="<?php echo base_url("asn/create")?>" method="post" id="create_asn_form">
+                    <button type="button" class="btn btn-primary" id = "create_asn_btn">Create ASN</button>
+                    <input type="hidden" name="order_ids" id="hidden_order_ids">
+                </form>
             </div>
         <?php endif; ?>
     </div>

@@ -22,7 +22,13 @@ class Asn extends BaseController {
         $data['orders_data'] = [];
         if($this->request->is('post')) {
             $req_data = $this->request->getPost();
+            $req_data['order_ids'] = explode(",",$req_data['order_ids']);
+            
             $data['orders_data'] = $this->deliveryOrdersModel->whereIn('id',$req_data['order_ids'])->findAll();
+            
+            foreach($data['orders_data'] as $k => $v) {
+                $data['orders_data'][$k]['order_items'] = $this->deliveryOrderItemsModel->where('delivery_order_id' , $v['id'])->findAll();
+            }
         }
         return view("asn/create",$data);
     }
