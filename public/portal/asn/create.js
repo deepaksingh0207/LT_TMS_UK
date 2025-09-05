@@ -10,6 +10,6 @@ $(document).ready(function () {
         console.log(option_html);
 
         $('.load-dropdown').html(option_html);
-        $('.selectpicker').selectpicker("refresh");
+        // $('.selectpicker').selectpicker("refresh");
     });
 });
