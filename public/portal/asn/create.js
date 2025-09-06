@@ -1,3 +1,20 @@
+const slots = document.querySelectorAll('.time-slot');
+let selectedSlot = null;
+
+slots.forEach(slot => {
+    slot.addEventListener('click', function () {
+        slots.forEach(s => s.classList.remove('active'));
+        this.classList.add('active');
+        selectedSlot = this.textContent;
+    });
+});
+
+document.getElementById('clearSelection').addEventListener('click', function () {
+    document.getElementById('date').value = "";
+    slots.forEach(s => s.classList.remove('active'));
+    selectedSlot = null;
+});
+
 $(document).ready(function () {
     $("#no_of_vehicle").change(function (e) { 
         e.preventDefault();
